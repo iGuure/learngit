@@ -1,0 +1,190 @@
+Git常用命令
+
+git status
+==========
+查看状态
+
+git clone http(s)|git://github.com/michaelliao/gitskills.git
+============================================================
+克隆远程版本库
+
+git add 文件名|.
+================
+添加文件 - 把要提交的所有修改放到暂存区（Stage）
+
+git commit -m "注释"
+====================
+提交文件 - 一次性把暂存区的所有修改提交到分支
+
+git push
+========
+上传文件（只上传此分支更新的内容）
+
+git push origin master
+======================
+上传master分支的文件
+
+git diff (HEAD -- 文件)
+=======================
+查看修改（指定文件）
+
+git log (--pretty=oneline --abbrev-commit)
+==========================
+查看提交记录（精简模式）
+
+git reflog
+==========
+查看命令历史
+
+git reset --hard HEAD^|版本号
+=============================
+版本回退
+HEAD^表示上一个版本，HEAD^^表示上上一个版本，HEAD~100表示往上100个版本
+版本号可以通过git log/git reflog查看
+* 用于git commit错误的文件之后
+
+git reset HEAD 文件
+===================
+把暂存区的修改撤销掉（unstage），重新放回工作区
+* 用于git add错误的文件之后
+
+git checkout 文件
+=================
+丢弃工作区的修改
+* 用于修改错误的文件之后
+
+git rm 文件
+===========
+删除文件
+之后要用git commit提交一遍
+
+git checkout -- 文件
+====================
+文件被误删后，恢复文件
+
+git checkout 分支名
+======================
+切换分支
+
+git checkout -b 分支名
+======================
+创建并切换分支
+
+git branch
+==========
+查看分支
+
+git branch 分支名
+=================
+创建分支
+
+git branch -d 分支名
+====================
+删除分支
+
+git branch -D 分支名
+====================
+强行删除分支
+* 当该分支还没被merge时使用
+
+git checkout 分支名
+===================
+切换分支
+
+git merge 其他的分支名
+======================
+把其他的分支合并到当前分支
+
+git log --graph (--pretty=oneline --abbrev-commit)
+==================================================
+查看分支合并图
+
+git merge --no-ff -m "commit描述" 分支名
+========================================
+强制禁用Fast forward模式，把其他的分支合并到当前分支，此时会在merge时生成一个新的commit
+* fast forward合并看不出来曾经做过合并
+
+git remote (-v)
+===============
+查看远程库的信息（显示更详细的信息）
+
+git checkout -b dev origin/dev
+==============================
+创建远程origin的dev分支到本地
+* 也可以直接使用git checkout dev，实现同样的功能
+* 可以先使用git pull和git branch --all，查看当前的远程分支
+
+git branch --set-upstream dev origin/dev
+========================================
+指定本地dev分支与远程origin/dev分支的链接
+* 该方法已弃用
+
+git fetch origin master
+=======================
+将远程版本库中master的内容存放在origin/master分支上
+
+git pull
+========
+把最新的提交抓下来
+* 所有分支最新的内容都会被抓下来
+* 注意区分它和git push，后者只上传当前分支的内容
+
+git pull origin master
+======================
+把master分支最新的提交抓下来
+*  等于git fetch origin master + git merge origin/master
+
+
+Git不常用命令
+
+git stash
+=========
+把当前工作现场储藏起来
+
+git stash list
+==============
+查看储藏的工作现场
+
+git stash apply
+===============
+恢复工作现场
+
+git stash drop
+==============
+恢复工作现场，并删除stash内容
+
+git tag
+=======
+查看所有标签
+
+git tag v1.0
+============
+打一个新标签
+
+git tag v0.9 6224937
+====================
+对某次提交打一个新标签
+
+git tag -a v0.1 -m "version 0.1 released" 3628164
+=================================================
+创建带有说明的标签，用-a指定标签名，-m指定说明文字
+
+git tag -d v0.1
+===============
+删除某个标签
+
+git show v0.9
+=============
+查看标签信息
+
+git push origin v1.0
+====================
+推送某个标签到远程
+
+git push origin --tags
+======================
+一次性推送全部尚未推送到远程的本地标签
+
+git push origin :refs/tags/v0.9
+===============================
+从远程删除某个标签
